@@ -4,17 +4,17 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.name }}
   labels:
-    app: {{ .Values.labels.app | default .Values.name }}
+    app: app: {{ .Values.name }}
 spec:
   serviceName: {{ .Values.serviceName | default .Values.name }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.labels.app | default .Values.name }}
+      app: {{ .Values.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.labels.app | default .Values.name }}
+        app: {{ .Values.name }}
     spec:
       containers:
       - name: {{ .Values.name }}-container
