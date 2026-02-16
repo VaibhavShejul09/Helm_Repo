@@ -9,17 +9,21 @@ image:
   repository: mysql
   tag: 8.0
 
+# Secret must be a map of key/value pairs, not just a name
 secret:
-  name: mysql-auth-service-secret
+  MYSQL_ROOT_PASSWORD: root
 
+# ConfigMap (if you need MySQL database name)
 config:
-  name: mysql-auth-config
+  MYSQL_DATABASE: application_auth_db
 
+# Persistent volume
 persistence:
   name: mysql-auth-data
   mountPath: /var/lib/mysql
   size: 5Gi
 
+# Liveness probe
 livenessProbe:
   exec:
     - sh
@@ -27,7 +31,10 @@ livenessProbe:
     - mysqladmin ping -uroot -p$MYSQL_ROOT_PASSWORD
   initialDelaySeconds: 180
   periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 3
 
+# Readiness probe
 readinessProbe:
   exec:
     - sh
@@ -35,3 +42,5 @@ readinessProbe:
     - mysqladmin ping -uroot -p$MYSQL_ROOT_PASSWORD
   initialDelaySeconds: 120
   periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 3
