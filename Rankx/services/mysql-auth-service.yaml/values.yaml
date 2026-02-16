@@ -1,18 +1,25 @@
 kind: StatefulSet
 name: mysql-auth-service
 replicaCount: 1
-service.port: 3306
+
+service:
+  port: 3306
+
 image:
   repository: mysql
   tag: 8.0
+
 secret:
   name: mysql-auth-secret
+
 config:
   name: mysql-auth-config
+
 persistence:
   name: mysql-auth-data
   mountPath: /var/lib/mysql
   size: 5Gi
+
 livenessProbe:
   exec:
     - sh
@@ -20,6 +27,7 @@ livenessProbe:
     - mysqladmin ping -uroot -p$MYSQL_ROOT_PASSWORD
   initialDelaySeconds: 180
   periodSeconds: 30
+
 readinessProbe:
   exec:
     - sh
