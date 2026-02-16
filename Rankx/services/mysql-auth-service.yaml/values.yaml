@@ -10,7 +10,7 @@ image:
   tag: 8.0
 
 secret:
-  name: mysql-auth-secret
+  name: mysql-auth-service-secret
 
 config:
   name: mysql-auth-config
