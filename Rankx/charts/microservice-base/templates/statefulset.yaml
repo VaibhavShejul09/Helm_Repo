@@ -27,14 +27,14 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ .Values.secret.name }}
-              key: {{ .Values.secret.key | default "MYSQL_ROOT_PASSWORD" }}
+              key: MYSQL_ROOT_PASSWORD
         {{- end }}
         {{- if .Values.config }}
         - name: MYSQL_DATABASE
           valueFrom:
             configMapKeyRef:
               name: {{ .Values.config.name }}
-              key: {{ .Values.config.key | default "MYSQL_DATABASE" }}
+              key: MYSQL_DATABASE
         {{- end }}
         volumeMounts:
         - name: {{ .Values.persistence.name | default "mysql-data" }}
