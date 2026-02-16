@@ -5,9 +5,14 @@ metadata:
   labels:
     app: {{ .Values.name }}
 spec:
-  clusterIP: {{ .Values.clusterIP | default "ClusterIP" }}
   selector:
     app: {{ .Values.name }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
+  {{- if eq .Values.kind "StatefulSet" }}
+  clusterIP: None   # headless service only for StatefulSet
+  {{- else }}
+  type: {{ .Values.service.type | default "ClusterIP" }}
+  {{- end }}
+
