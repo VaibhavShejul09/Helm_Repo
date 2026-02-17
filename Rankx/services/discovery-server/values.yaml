@@ -1,5 +1,4 @@
 kind: Deployment
-
 name: discovery-server
 
 replicaCount: 1
@@ -12,8 +11,8 @@ service:
   type: ClusterIP
   port: 8761
 
-config: {}
-secret: {}
+config: false
+secret: false
 
 livenessProbe:
   path: /actuator/health
@@ -24,5 +23,3 @@ readinessProbe:
   path: /actuator/health
   initialDelaySeconds: 30
   periodSeconds: 15
-
-resources: {}

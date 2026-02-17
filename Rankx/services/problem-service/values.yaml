@@ -3,14 +3,14 @@
 # -------------------------
 kind: Deployment
 
-name: auth-backend
+name: problem-service
 replicaCount: 1
 
 # -------------------------
 # Docker image
 # -------------------------
 image:
-  repository: shejulv088/final_auth_service
+  repository: shejulv088/final_problem_service
   tag: v1
   pullPolicy: IfNotPresent
 
@@ -19,7 +19,7 @@ image:
 # -------------------------
 service:
   type: ClusterIP
-  port: 8081
+  port: 8082
 
 # -------------------------
 # ConfigMap
@@ -31,10 +31,8 @@ config:
 
   SPRING_CONFIG_URI: http://config-server:8888
   SPRING_PROFILES_ACTIVE: native
-  SPRING_DATASOURCE_URL: jdbc:mysql://mysql-auth-service:3306/application_auth_db
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql-problem-service:3306/application_problemdb
   SPRING_DATASOURCE_USERNAME: root
-  SPRING_REDIS_HOST: redis
-  SPRING_REDIS_PORT: "6379"
   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
 
 # -------------------------
@@ -54,7 +52,7 @@ initContainers:
       - -c
       - |
         echo "Waiting for MySQL..."
-        until nc -z mysql-auth-service 3306; do
+        until nc -z mysql-problem-service 3306; do
           sleep 5
         done
 

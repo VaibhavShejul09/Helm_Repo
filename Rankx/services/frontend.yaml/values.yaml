@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: shejulv088/final_frontend
-  tag: v1
+  tag: v3
 
 service:
   type: ClusterIP
@@ -23,7 +23,7 @@ initContainers:
       - -c
       - |
         echo "Waiting for backend to be ready..."
-        until nc -z api-gateway-service 8080; do
+        until nc -z api-gateway 8080; do
           echo "Backend not ready, sleeping 5s..."
           sleep 5
         done
